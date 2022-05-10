@@ -1,14 +1,30 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import Question from "../Question/Question";
 import { QuizContext } from "../../context/quiz-context";
 
 const Quiz = () => {
   const [state, dispatch] = useContext(QuizContext);
+  const url =
+    "https://opentdb.com/api.php?amount=15&category=11&difficulty=easy&type=multiple&encode=url3986";
+
+  useEffect(() => {
+    if (state.questions.length > 0) {
+      return;
+    }
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({ type: "QUESTIONS_LOADING_SUCCESS", payload: data.results });
+      })
+      .catch(() => {
+        throw new Error(`Cannot get data from API with URL: ${url}`);
+      });
+  });
 
   return (
     <div className={"quiz"}>
-      {!state.showResult && (
+      {!state.showResult && state.questions.length > 0 && (
         <div>
           <div className={"score"}>{`Question ${
             state.currentQuestionIndex + 1
