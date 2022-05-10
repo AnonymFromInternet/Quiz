@@ -8,7 +8,6 @@ const data = [
     ],
     correctAnswer: "Cascading Style Sheets",
   },
-
   {
     question:
       "Where in an HTML document is the correct place to refer to an external style sheet?",

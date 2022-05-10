@@ -1,17 +1,28 @@
 import { createContext, useReducer } from "react";
 
+import data from "../data";
+
 const initialState = {
-  questions: [],
-  currentQuestionIndex: 1,
+  questions: data,
+  currentQuestionIndex: 0,
+  showResult: false,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "NEXT_QUESTION":
+      const showResult =
+        state.currentQuestionIndex === state.questions.length - 1;
+      const currentQuestionIndex = showResult
+        ? state.currentQuestionIndex
+        : state.currentQuestionIndex + 1;
       return {
         ...state,
-        currentQuestionIndex: state.currentQuestionIndex + 1,
+        currentQuestionIndex: currentQuestionIndex,
+        showResult,
       };
+    case "RESTART":
+      return initialState;
     default:
       throw new Error(
         `Reducer: Cannot recognize action type. Action type is: ${action.type}`
