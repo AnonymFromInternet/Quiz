@@ -27,7 +27,9 @@ const Quiz = () => {
           <div className={"congratulations"}>Your result</div>
           <div className="results-info">
             <div>You have completed the quiz</div>
-            <div>Your result is of 8</div>
+            <div>
+              Your result {state.result} of {state.questions.length}
+            </div>
             <button
               className={"next-button"}
               onClick={() => dispatch({ type: "RESTART" })}
